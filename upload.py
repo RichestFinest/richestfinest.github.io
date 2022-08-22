@@ -30,14 +30,18 @@ if os.path.exists(f"comics/{today}.{format}"):
     if not override: sys.exit(1)
 
 # Read comic from original filepath
+print(f"Reading binary from {filepath}...")
 with open(filepath, 'rb') as f:
     raw_comic = f.read()
 
+
 # Write comic to comics directory
+print(f"Writing binary to comics/{today}.{format}...")
 with open(f"comics/{today}.{format}", 'wb') as f:
     f.write(raw_comic)
 
 # Update comic_num.txt
+print("Updating statistics...")
 with open("comic_num.txt", 'r+') as f:
     prev_comic_num = int(f.read())
     comic_num = prev_comic_num + 1
