@@ -66,5 +66,5 @@ os.system(f'git commit -am "Automatic Daily Comic upload #{comic_num}"')
 print("\nPushing...")
 os.system('git push https://github.com/RichestFinest/richestfinest.github.io master')
 
-print("Commit and push completed.")
+print("\nCommit and push completed.")
 
