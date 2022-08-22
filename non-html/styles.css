@@ -1,0 +1,39 @@
+@font-face {
+    src: url("fonts/GreenbeansThin.ttf");
+    font-family: GreenbeansThin;
+}
+
+body {
+    font-size: 2.5em;
+    font-family: GreenbeansThin, sans-serif;
+}
+
+nav {
+    text-align: center;
+    margin: auto;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0, 4, 218)
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#title-wrapper {
+    text-align: center;
+    margin: auto;
+    font-size: 1.5em;
+}
+
+.main-header {
+    margin-bottom: 0px;
+}
+
+.subtitle {
+    font-size: 1em;
+    padding-top: 0px;
+    margin-top: 0px;
+}

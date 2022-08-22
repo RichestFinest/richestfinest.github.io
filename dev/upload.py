@@ -11,13 +11,13 @@ format = format.lower()
 format = format.replace('.', '', 1)
 
 if format not in ("jpeg", "jpg", "png", "svg", "webp"):
-    print(f"WARNING: File format may be unsupported. Recommended file formats: JPEG (JPG), PNG, SVG, WEBP. Your file format: {format.upper()}")
+    print(f"WARNING: File format may be unsupported. Website functionality may break. Recommended file formats: JPEG (JPG), PNG, SVG, WEBP. Your file format: {format.upper()}")
     format_override = input("Proceed? (Y/n)") == 'Y'
 
     if not format_override: sys.exit(1)
 
 # Get today's date
-today = datetime.date.today().strftime('%Y-%m-%d')
+today = datetime.date.today().strftime('%m-%d-%Y')
 
 # If the filepath doesn't exist, warn the user and quit the application
 if not os.path.exists(filepath):
@@ -38,8 +38,8 @@ with open(filepath, 'rb') as f:
 
 
 # Write comic to comics directory
-print(f"Writing binary to comics/{today}.{format}...")
-with open(f"comics/{today}.{format}", 'wb') as f:
+print(f"Writing binary to dev/comics/{today}.{format}...")
+with open(f"dev/comics/{today}.{format}", 'wb') as f:
     f.write(raw_comic)
 
 
@@ -48,14 +48,14 @@ if not override:
     # Update comic_num.txt
 
     print("Updating statistics...")
-    with open("comic_num.txt", 'r+') as f:
+    with open("dev/comic_num.txt", 'r+') as f:
         prev_comic_num = int(f.read())
         comic_num = prev_comic_num + 1
 
         f.seek(0)
         f.write(str(comic_num))
 else:
-    with open("comic_num.txt", 'r') as f:
+    with open("dev/comic_num.txt", 'r') as f:
         comic_num = int(f.read())
 
 # Commit and push to GitHub #
