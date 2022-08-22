@@ -28,6 +28,23 @@ a:hover {
     font-size: 1.5em;
 }
 
+#comic-display {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+}
+
+#todays-comic {
+    text-align: center;
+    margin: auto;
+}
+
+#comic-status {
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
 .main-header {
     margin-bottom: 0px;
 }
