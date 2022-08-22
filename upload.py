@@ -60,8 +60,11 @@ else:
 
 # Commit and push to GitHub #
 
+print("\nStaging changes...")
+os.system("git add .")
+
 print("\nCommitting...")
-os.system(f'git commit -am "Automatic Daily Comic upload #{comic_num}"')
+os.system(f'git commit -m "Automatic Daily Comic upload #{comic_num}"')
 
 print("\nPushing...")
 os.system('git push https://github.com/RichestFinest/richestfinest.github.io master')
