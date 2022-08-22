@@ -17,7 +17,7 @@ if format not in ("jpeg", "jpg", "png", "svg", "webp"):
     if not format_override: sys.exit(1)
 
 # Get today's date
-today = datetime.date.today().strftime('%m-%d-%Y')
+today = datetime.date.today().strftime('-%m--%d-%Y')
 
 # If the filepath doesn't exist, warn the user and quit the application
 if not os.path.exists(filepath):
@@ -65,6 +65,9 @@ os.system("git add .")
 
 print("\nCommitting...")
 os.system(f'git commit -m "Automatic Daily Comic upload #{comic_num}"')
+
+print("\nPulling...")
+os.system("git pull https://github.com/RichestFinest/richestfinest.github.io master")
 
 print("\nPushing...")
 os.system('git push https://github.com/RichestFinest/richestfinest.github.io master')
