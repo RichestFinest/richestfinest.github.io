@@ -8,11 +8,11 @@ filepath = input("Please input filepath: ")
 # Get comic format
 _, format = os.path.splitext(filepath)
 format = format.lower()
-format = format.replace('.', '')
+format = format.replace('.', '', 1)
 
 if format not in ("jpeg", "jpg", "png", "svg", "webp"):
     print(f"WARNING: File format may be unsupported. Recommended file formats: JPEG (JPG), PNG, SVG, WEBP. Your file format: {format.upper()}")
-    override = input("To override warning and continue, input 'O'. To quit, leave blank and enter.") == 'O'
+    override = input("Proceed? (Y/n)") == 'Y'
 
     if not override: sys.exit(1)
 
@@ -37,4 +37,21 @@ with open(filepath, 'rb') as f:
 with open(f"comics/{today}.{format}", 'wb') as f:
     f.write(raw_comic)
 
-# TODO: ADD GIT STUFF
+# Update comic_num.txt
+with open("comic_num.txt", 'r+') as f:
+    prev_comic_num = int(f.read())
+    comic_num = prev_comic_num + 1
+
+    f.write(str(comic_num))
+
+
+# Commit and push to GitHub #
+
+print("\nCommitting...")
+os.system(f'git commit -am "Automatic Daily Comic upload #{comic_num}"')
+
+print("\nPushing...")
+os.system('git push https://github.com/RichestFinest/richestfinest.github.io master')
+
+print("Commit and push completed.")
+
