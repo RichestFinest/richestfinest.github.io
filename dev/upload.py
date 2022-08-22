@@ -17,7 +17,7 @@ if format not in ("jpeg", "jpg", "png", "svg", "webp"):
     if not format_override: sys.exit(1)
 
 # Get today's date
-today = datetime.date.today().strftime('-%m--%d-%Y')
+today = datetime.date.today().strftime('%#d-%#m-%Y')
 
 # If the filepath doesn't exist, warn the user and quit the application
 if not os.path.exists(filepath):
