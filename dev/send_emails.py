@@ -143,7 +143,7 @@ def send_email(recipent, sender, subject, attachment_filename, text_content):
 
         # pylint: disable=E1101
         send_message = (service.users().messages().send
-                        (userId="me", body=message['message']).execute())
+                        (userId="me", body=message['message']['raw']).execute())
         print(F'Message Id: {send_message["id"]}')
 
     except HttpError as error:
