@@ -20,13 +20,12 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.errors import HttpError
 from google.auth.transport.requests import Request
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "auth/client_id.json"
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
 creds = None
 
 if os.path.exists("auth/token.pickle"):
-    with open("token.pickle", 'rb') as token:
+    with open("auth/token.pickle", 'rb') as token:
         creds = pickle.load(token)
 
 if not creds or not creds.valid:
