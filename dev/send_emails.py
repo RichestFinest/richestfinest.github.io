@@ -140,17 +140,10 @@ def send_email(recipent, sender, subject, attachment_filename, text_content):
     try:
         service = build('gmail', 'v1', credentials=creds)
         message = create_email_with_attachment(recipent, sender, subject, attachment_filename, text_content)
-
-        # encoded message
-        encoded_message = base64.urlsafe_b64encode(message.as_bytes()) \
-            .decode()
-
-        create_message = {
-            'raw': encoded_message
-        }
+        
         # pylint: disable=E1101
         send_message = (service.users().messages().send
-                        (userId="me", body=create_message).execute())
+                        (userId="me", body=message).execute())
         print(F'Message Id: {send_message["id"]}')
 
     except HttpError as error:
