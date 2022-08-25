@@ -146,7 +146,7 @@ def send_email(recipent, sender, subject, attachment_filename, text_content):
 
         # pylint: disable=E1101
         send_message = (service.users().messages().send
-                        (userId="me", body=json.dumps({"id": message['message']['id']}).encode("utf-8")).execute())
+                        (userId="me", body={"id": message['message']['id']}).execute())
         print(F'Message Id: {send_message["id"]}')
 
     except HttpError as error:
