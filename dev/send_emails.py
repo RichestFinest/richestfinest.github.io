@@ -21,7 +21,10 @@ from googleapiclient.errors import HttpError
 from google.auth.transport.requests import Request
 
 # TODO: FIX LINE 141
-SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
+SCOPES = [
+             "https://www.googleapis.com/auth/gmail.send",
+             "https://www.googleapis.com/auth/gmail.compose"
+          ]
 
 creds = None
 
