@@ -174,6 +174,6 @@ def send_emails(comic):
         email = user.to_dict()["email"]
         first_name = user.to_dict()["firstName"].capitalize()
 
-        send_email(email, "Do Not Reply - Riche$t Fine$t Notifier", f"Riche$t Fine$t #{comic_num}", comic, 
+        send_email(email, "Do Not Reply - Riche$t Fine$t Notifier", f"Do Not Reply - Riche$t Fine$t #{comic_num}", comic, 
         f"Hello {first_name},\n\nRiche$t Fine$t #{comic_num} has been uploaded! You can read the comic in the email's attachments, or, alternatively, go to https://richestfinest.github.io\n\nHappy Reading!\nRiche$t Fine$t Team"
         )
