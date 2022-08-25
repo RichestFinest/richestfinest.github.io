@@ -142,8 +142,6 @@ def send_email(recipent, sender, subject, attachment_filename, text_content):
         service = build('gmail', 'v1', credentials=creds)
         message = create_email_with_attachment(recipent, sender, subject, attachment_filename, text_content)
 
-        print("MESSAGE " + str(message['message']))
-
         # pylint: disable=E1101
         send_message = (service.users().messages().send
                         (userId="me", body=message).execute())
