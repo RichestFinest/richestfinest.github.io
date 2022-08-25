@@ -50,8 +50,6 @@ def create_email_with_attachment(recipent, sender, subject, attachment_filename,
       for guides on implementing OAuth2 for the application.
     """
 
-    creds, _ = google.auth.default()
-
     try:
         # create gmail api client
         service = build('gmail', 'v1', credentials=creds)
@@ -134,8 +132,6 @@ def send_email(recipent, sender, subject, attachment_filename, text_content):
     TODO(developer) - See https://developers.google.com/identity
     for guides on implementing OAuth2 for the application.
     """
-
-    creds, _ = google.auth.default()
 
     try:
         service = build('gmail', 'v1', credentials=creds)
