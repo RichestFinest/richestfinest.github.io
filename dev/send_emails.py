@@ -26,10 +26,8 @@ def create_email_with_attachment(recipent, sender, subject, attachment_filename,
       TODO(developer) - See https://developers.google.com/identity
       for guides on implementing OAuth2 for the application.
     """
-    with open("dev/api_key.txt", 'r') as f:
-        api_key = f.read()
 
-    os.environ["GOOGLE_API_KEY"] = api_key
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "auth/client_id.json"
     creds, _ = google.auth.default()
 
     try:
