@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import os
 import smtplib, ssl
 from firebase_admin import db, firestore, credentials, initialize_app
 
@@ -25,6 +26,10 @@ def create_email_with_attachment(recipent, sender, subject, attachment_filename,
       TODO(developer) - See https://developers.google.com/identity
       for guides on implementing OAuth2 for the application.
     """
+    with open("dev/api_key.txt", 'r') as f:
+        api_key = f.read()
+
+    os.environ["GOOGLE_API_KEY"] = api_key
     creds, _ = google.auth.default()
 
     try:
@@ -109,6 +114,9 @@ def send_email(recipent, sender, subject, attachment_filename, text_content):
     TODO(developer) - See https://developers.google.com/identity
     for guides on implementing OAuth2 for the application.
     """
+    with open("dev/api_key.txt", 'r') as f:
+        api_key = f.read()
+
     creds, _ = google.auth.default()
 
     try:
