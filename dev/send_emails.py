@@ -147,7 +147,7 @@ def send_emails(comic):
 
     docs = doc_ref.get()
 
-    with open("comic_num.txt", 'r') as f:
+    with open("dev/comic_num.txt", 'r') as f:
         comic_num = f.read()
 
     for user in docs:
@@ -157,4 +157,3 @@ def send_emails(comic):
         send_email(email, "Do Not Reply - Riche$t Fine$t Notifier", f"Riche$t Fine$t #{comic_num}", comic, 
         f"Hello {first_name},\n\nRiche$t Fine$t #{comic_num} has been uploaded! You can read the comic in the email's attachments, or, alternatively, go to https://richestfinest.github.io\n\nHappy Reading!\nRiche$t Fine$t Team"
         )
-        
