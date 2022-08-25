@@ -1,6 +1,7 @@
 import os
 import sys
 import datetime
+from send_emails import send_emails
 
 # Get filepath of comic
 filepath = input("Please input filepath: ")
@@ -58,6 +59,7 @@ else:
     with open("dev/comic_num.txt", 'r') as f:
         comic_num = int(f.read())
 
+
 # Commit and push to GitHub #
 
 print("\nStaging changes...")
@@ -73,4 +75,11 @@ print("\nPushing...")
 os.system('git push https://github.com/RichestFinest/richestfinest.github.io master')
 
 print("\nCommit and push completed.")
+
+print("\nSending notifications to subscribers...")
+send_emails(f"dev/comics/{today}.{format}")
+
+print("\nUpload suite completed.")
+
+
 

@@ -22,12 +22,6 @@ a:hover {
     text-decoration: underline;
 }
 
-#title-wrapper {
-    text-align: center;
-    margin: auto;
-    font-size: 1.5em;
-}
-
 #comic-display {
     display: block;
     margin-left: auto;
@@ -43,6 +37,17 @@ a:hover {
 #comic-status {
     margin-bottom: 0px;
     font-weight: bold;
+}
+
+#subscribe-form {
+    margin: auto;
+    text-align: center;
+}
+
+.title-wrapper {
+    text-align: center;
+    margin: auto;
+    font-size: 1.5em;
 }
 
 .main-header {
