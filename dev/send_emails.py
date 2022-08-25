@@ -94,7 +94,7 @@ def create_email_with_attachment(recipent, sender, subject, attachment_filename,
         print(F'An error occurred: {error}')
         draft = None
         
-    return {'raw': base64.urlsafe_b64encode(mime_message.as_string().replace('message','resource').encode('ascii'))}
+    return {'raw': base64.urlsafe_b64encode(mime_message.as_string().replace('message','resource').encode('ascii')).decode()}
 
 
 def build_file_part(file):
