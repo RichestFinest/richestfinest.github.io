@@ -141,9 +141,9 @@ def send_email(recipent, sender, subject, attachment_filename, text_content):
 
 def send_emails(comic):
     try:
-        cred = credentials.Certificate("dev/admin_key.json")
+        cred = credentials.Certificate("auth/admin_key.json")
     except FileNotFoundError:
-        print("Credentials do not exist. Please check that you have admin_key.json in the dev directory.")
+        print("Credentials do not exist. Please check that you have admin_key.json in the auth directory.")
         quit(1)
 
     app = initialize_app(cred)
