@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import os
+import pickle
 import smtplib, ssl
 from firebase_admin import db, firestore, credentials, initialize_app
 
@@ -15,9 +16,30 @@ from email.mime.text import MIMEText
 
 import google.auth
 from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.errors import HttpError
+from google.auth.transport.requests import Request
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "auth/client_id.json"
+SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
+
+creds = None
+
+if os.path.exists("auth/token.pickle"):
+    with open("token.pickle", 'rb') as token:
+        creds = pickle.load(token)
+
+if not creds or not creds.valid:
+    if creds and creds.expired and creds.refresh_token:
+        creds.refresh(Request())
+    else:
+        flow = InstalledAppFlow.from_client_secrets_file(
+            "auth/client_id.json", SCOPES
+        )
+        creds = flow.run_local_server(port=0)
+
+    with open("auth/token.pickle", 'wb') as token:
+        pickle.dump(creds, token)
 
 def create_email_with_attachment(recipent, sender, subject, attachment_filename, text_content):
     """Create and insert a draft email with attachment.
