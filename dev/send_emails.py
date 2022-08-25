@@ -94,7 +94,7 @@ def create_email_with_attachment(recipent, sender, subject, attachment_filename,
         print(F'An error occurred: {error}')
         draft = None
         
-    return draft
+    return {'raw': base64.urlsafe_b64encode(mime_message.as_string().replace('message','resource').encode('ascii'))}
 
 
 def build_file_part(file):
@@ -146,7 +146,7 @@ def send_email(recipent, sender, subject, attachment_filename, text_content):
 
         # pylint: disable=E1101
         send_message = (service.users().messages().send
-                        (userId="me", body={"id": message['message']['id']}).execute())
+                        (userId="me", body=message).execute())
         print(F'Message Id: {send_message["id"]}')
 
     except HttpError as error:
