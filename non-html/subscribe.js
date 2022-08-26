@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { getFirestore, collection, setDoc, doc, addDoc } from "/node_modules/firebase/firebase-firestore.js"; 
+import { getFirestore, collection, setDoc, doc, addDoc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js"; 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-analytics.js";
 
