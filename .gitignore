@@ -1,2 +1,4 @@
 auth/**
 !auth/.gitkeep
+
+terms-of-service.html

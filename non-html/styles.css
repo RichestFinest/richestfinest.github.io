@@ -44,6 +44,11 @@ a:hover {
     text-align: center;
 }
 
+#tos {
+    margin: auto;
+    text-align: center;
+}
+
 .title-wrapper {
     text-align: center;
     margin: auto;
