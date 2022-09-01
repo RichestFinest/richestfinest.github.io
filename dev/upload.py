@@ -6,6 +6,13 @@ from send_emails import send_emails
 # Get filepath of comic
 filepath = input("Please input filepath: ")
 
+# Get custom date if user wants to
+today = input("Custom date (leave blank to use today) (MM-DD-YYYY, no zero-padding) ")
+
+if not today:
+    # Get today's date
+    today = datetime.date.today().strftime('%#m-%#d-%Y')
+
 # Get comic format
 _, format = os.path.splitext(filepath)
 format = format.lower()
@@ -13,12 +20,11 @@ format = format.replace('.', '', 1)
 
 if format not in ("jpeg", "jpg", "png", "svg", "webp"):
     print(f"WARNING: File format may be unsupported. Website functionality may break. Recommended file formats: JPEG (JPG), PNG, SVG, WEBP. Your file format: {format.upper()}")
-    format_override = input("Proceed? (Y/n)") == 'Y'
+    format_override = input("Proceed? (y/N)") == 'y'
 
     if not format_override: sys.exit(1)
 
-# Get today's date
-today = datetime.date.today().strftime('%#m-%#d-%Y')
+
 
 # If the filepath doesn't exist, warn the user and quit the application
 if not os.path.exists(filepath):
