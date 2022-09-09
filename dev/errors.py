@@ -1,0 +1,2 @@
+class OverrideWarning(Warning):
+    pass
