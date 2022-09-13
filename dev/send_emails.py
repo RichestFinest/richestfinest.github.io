@@ -21,6 +21,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.errors import HttpError
 from google.auth.transport.requests import Request
 
+import errors
+
 # TODO: FIX LINE 141
 SCOPES = [
              "https://www.googleapis.com/auth/gmail.send",
@@ -32,6 +34,10 @@ creds = None
 if os.path.exists("auth/token.pickle"):
     with open("auth/token.pickle", 'rb') as token:
         creds = pickle.load(token)
+
+if not os.path.exists("auth/client_id.json"):
+    raise errors.MissingCredentialsWarning("Missing credentials: client_id.json. You will not be able to upload comics or send subscriber emails.")
+
 
 if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
@@ -140,6 +146,9 @@ def send_email(recipent, sender, subject, text_content, attachment_filename=None
     """
 
     try:
+        if not creds:
+            raise errors.MissingCredentialsWarning()
+
         service = build('gmail', 'v1', credentials=creds)
         message = create_email_with_attachment(recipent, sender, subject, attachment_filename, text_content)
 
@@ -157,9 +166,8 @@ def send_email(recipent, sender, subject, text_content, attachment_filename=None
 def send_emails(comic):
     try:
         cred = credentials.Certificate("auth/admin_key.json")
-    except FileNotFoundError:
-        print("Credentials do not exist. Please check that you have admin_key.json in the auth directory.")
-        quit(1)
+    except FileNotFoundError as e:
+        raise errors.MissingCredentialsWarning("Missing credentials: admin_key.json. You will not be able to upload comics or send subscriber emails.") from e
 
     app = initialize_app(cred)
 
@@ -182,10 +190,9 @@ def send_emails(comic):
 def send_custom_emails(subject, text):
     try:
         cred = credentials.Certificate("auth/admin_key.json")
-    except FileNotFoundError:
-        print("Credentials do not exist. Please check that you have admin_key.json in the auth directory.")
-        quit(1)
-
+    except FileNotFoundError as e:
+        raise errors.MissingCredentialsWarning("Missing credentials: client_id.json. You will not be able to upload comics or send subscriber emails.") from e
+        
     app = initialize_app(cred)
 
     store = firestore.client()
