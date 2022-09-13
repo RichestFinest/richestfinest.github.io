@@ -50,6 +50,10 @@ a:hover {
     margin-right: 2em;
 }
 
+#comic-display {
+    margin-bottom: 1em;
+}
+
 .title-wrapper {
     text-align: center;
     margin: auto;
@@ -67,5 +71,6 @@ a:hover {
 }
 
 .center-div {
-    
+    text-align: center;
+    margin: auto;
 }
