@@ -1,4 +1,10 @@
 auth/**
 !auth/.gitkeep
 
+*.spec
+dist/
+build/
+
+**/__pycache__
+
 gallery.html

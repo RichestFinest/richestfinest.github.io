@@ -1,3 +1,6 @@
-firebase_admin==5.3.0
-google_api_python_client==2.58.0
+firebase_admin==5.3.0  # Required for the email list
+google_api_python_client==2.60.0
 google_auth_oauthlib==0.4.6
+Pillow==9.2.0
+PySimpleGUI==4.60.3  # For the Richest Finest GUI
+pyinstaller==4.7  # To build the GUI

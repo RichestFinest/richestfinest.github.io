@@ -69,13 +69,14 @@ def create_email_with_attachment(recipent, sender, subject, attachment_filename,
         mime_message.set_content(text_content)
 
         # guessing the MIME type
-        type_subtype, _ = mimetypes.guess_type(attachment_filename)
-        maintype, subtype = type_subtype.split('/')
+        if attachment_filename:
+            type_subtype, _ = mimetypes.guess_type(attachment_filename)
+            maintype, subtype = type_subtype.split('/')
 
-        with open(attachment_filename, 'rb') as fp:
-            attachment_data = fp.read()
+            with open(attachment_filename, 'rb') as fp:
+                attachment_data = fp.read()
 
-        mime_message.add_attachment(attachment_data, maintype, subtype)
+            mime_message.add_attachment(attachment_data, maintype, subtype)
 
         encoded_message = base64.urlsafe_b64encode(mime_message.as_bytes()).decode()
 
@@ -128,7 +129,7 @@ def build_file_part(file):
     msg.add_header('Content-Disposition', 'attachment', filename=filename)
     return msg
 
-def send_email(recipent, sender, subject, attachment_filename, text_content):
+def send_email(recipent, sender, subject, text_content, attachment_filename=None):
     """Create and send an email message
     Print the returned  message id
     Returns: Message object, including message id
@@ -174,6 +175,26 @@ def send_emails(comic):
         email = user.to_dict()["email"]
         first_name = user.to_dict()["firstName"].capitalize()
 
-        send_email(email, "Do Not Reply - Riche$t Fine$t Notifier", f"Do Not Reply - Riche$t Fine$t #{comic_num}", comic, 
-        f"Hello {first_name},\n\nRiche$t Fine$t #{comic_num} has been uploaded! You can read the comic in the email's attachments, or, alternatively, go to https://richestfinest.github.io\n\nHappy Reading!\nRiche$t Fine$t Team"
-        )
+        send_email(email, "Do Not Reply - Riche$t Fine$t Notifier", f"Do Not Reply - Riche$t Fine$t #{comic_num}", 
+        f"Hello {first_name},\n\nRiche$t Fine$t #{comic_num} has been uploaded! You can read the comic in the email's attachments, or, alternatively, go to https://richestfinest.github.io\n\nHappy Reading!\nRiche$t Fine$t Team",
+        comic)
+
+def send_custom_emails(subject, text):
+    try:
+        cred = credentials.Certificate("auth/admin_key.json")
+    except FileNotFoundError:
+        print("Credentials do not exist. Please check that you have admin_key.json in the auth directory.")
+        quit(1)
+
+    app = initialize_app(cred)
+
+    store = firestore.client()
+    doc_ref = store.collection(u"emails")
+
+    docs = doc_ref.get()
+
+    for user in docs:
+        email = user.to_dict()["email"]
+        first_name = user.to_dict()["firstName"].capitalize()
+
+        send_email(email, "Do Not Reply - Riche$t Fine$t Notifier", subject, text.replace("[name]", first_name))
