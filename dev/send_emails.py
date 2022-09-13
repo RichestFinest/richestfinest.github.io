@@ -36,7 +36,7 @@ if os.path.exists("auth/token.pickle"):
         creds = pickle.load(token)
 
 if not os.path.exists("auth/client_id.json"):
-    raise Warning("Missing credentials: client_id.json. You will not be able to upload comics or send subscriber emails.")
+    raise errors.MissingCredentialsWarning("Missing credentials: client_id.json. You will not be able to upload comics or send subscriber emails.")
 
 
 if not creds or not creds.valid:
@@ -167,7 +167,7 @@ def send_emails(comic):
     try:
         cred = credentials.Certificate("auth/admin_key.json")
     except FileNotFoundError as e:
-        raise errors.MissingCredentialsWarning("Credentials do not exist. Please check that you have admin_key.json in the auth directory.") from e
+        raise errors.MissingCredentialsWarning("Missing credentials: admin_key.json. You will not be able to upload comics or send subscriber emails.") from e
 
     app = initialize_app(cred)
 
@@ -191,7 +191,7 @@ def send_custom_emails(subject, text):
     try:
         cred = credentials.Certificate("auth/admin_key.json")
     except FileNotFoundError as e:
-        raise errors.MissingCredentialsWarning("Credential admin_key.json does not exist. Please check that you have admin_key.json in the auth directory.") from e
+        raise errors.MissingCredentialsWarning("Missing credentials: client_id.json. You will not be able to upload comics or send subscriber emails.") from e
         
     app = initialize_app(cred)
 

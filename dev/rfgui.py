@@ -2,16 +2,28 @@ import os
 import base64
 import io
 import datetime
+from tkinter import E
 import traceback
 
 import PySimpleGUI as sg
 import PIL
 from PIL import Image
 
-from upload import upload
 import errors
 from update import update
-from send_emails import send_custom_emails
+
+try:
+    from send_emails import send_custom_emails
+    from upload import upload
+except errors.MissingCredentialsWarning as e:
+    def send_custom_emails(*args):
+        raise errors.MissingCredentialsWarning("Unable to send due to missing credentials.")
+
+    def upload(*args):
+        raise errors.MissingCredentialsWarning("Unable to send due to missing credentials.")
+
+
+    sg.Popup(e)
 
 print("This is the Riche$t Fine$t Console. This is where you can see the details of the processes that are running, and any error tracebacks that may occur.")
 
