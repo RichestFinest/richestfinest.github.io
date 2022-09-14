@@ -8,30 +8,30 @@ try:
     import PySimpleGUI as sg
 except ImportError:
     print("ERROR (ImportError): Unable to import PySimpleGUI. Hint: pip install -r requirements.txt")
+    quit(1)
 
 try:
     from tkinter import E
     import PIL
     from PIL import Image
-except ImportError:
-    sg.popup_ok("ERROR (ImportError): Unable to import required packages. Install requirements with PIP from requirements.txt")
+except ImportError as e:
+    sg.popup_ok("ERROR (ImportError): Unable to import required packages. Install requirements with PIP from requirements.txt. You will be taken to an error window with more details.")
+    raise e
 
 try:
     import errors
     from update import update
-except ImportError:
-    sg.popup_ok("ERROR (ImportError): Unable to import required modules.")
+except ImportError as e:
+    sg.popup_ok("ERROR (ImportError): Unable to import required modules. You will be taken to an error window with more details.")
+    raise e
 
 try:
     from send_emails import send_custom_emails
     from upload import upload
+
+    missing_credentials = False
 except errors.MissingCredentialsWarning as e:
-    def send_custom_emails(*args):
-        raise errors.MissingCredentialsWarning("Unable to send due to missing credentials.")
-
-    def upload(*args):
-        raise errors.MissingCredentialsWarning("Unable to send due to missing credentials.")
-
+    missing_credentials = True
 
     sg.Popup(e)
 
@@ -169,12 +169,18 @@ def setup_upload_wizard():
                 custom_date = None
 
             try:
+                if missing_credentials:
+                    raise errors.MissingCredentialsWarning("You are missing the required credentials to do this.")
+
                 upload(filename)
                 sg.popup_ok("Upload suite completed. You can close the application, or upload more comics.")
             except errors.OverrideWarning:
                 override = sg.PopupOKCancel("Today's comic already exists. Override?") == 'OK'
     
                 if override:
+                    if missing_credentials:
+                        raise errors.MissingCredentialsWarning("You are missing the required credentials to do this.")
+
                     upload(filename, override=True)
                     sg.popup_ok("Upload suite completed. You can close the application, or upload more comics.")
     
@@ -205,6 +211,9 @@ def setup_subscriber_notifier():
         event, values = notifier_window.read()
 
         if event == "Send":
+            if missing_credentials:
+                raise errors.MissingCredentialsWarning("You are missing the required credentials to do this.")
+
             email_text_content = values["email_text_content"]
             subject = values["subject"]
 

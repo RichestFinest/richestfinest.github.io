@@ -5,6 +5,7 @@ auth/**
 **/rfgui.exe
 build/
 
-**/__pycache__
+**/__pycache__/
+*.pyc
 
 gallery.html
