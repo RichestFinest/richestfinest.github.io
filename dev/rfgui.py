@@ -2,15 +2,25 @@ import os
 import base64
 import io
 import datetime
-from tkinter import E
 import traceback
 
-import PySimpleGUI as sg
-import PIL
-from PIL import Image
+try:
+    import PySimpleGUI as sg
+except ImportError:
+    print("ERROR (ImportError): Unable to import PySimpleGUI. Hint: pip install -r requirements.txt")
 
-import errors
-from update import update
+try:
+    from tkinter import E
+    import PIL
+    from PIL import Image
+except ImportError:
+    sg.popup_ok("ERROR (ImportError): Unable to import required packages. Install requirements with PIP from requirements.txt")
+
+try:
+    import errors
+    from update import update
+except ImportError:
+    sg.popup_ok("ERROR (ImportError): Unable to import required modules.")
 
 try:
     from send_emails import send_custom_emails
