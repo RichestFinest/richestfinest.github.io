@@ -2,9 +2,7 @@ import os
 
 
 def build():
-    name = "rfgui"
-
-    if os.path.exists(f"dist/{name}.exe"):
+    if os.path.exists(f"dist/rfgui.exe"):
         override = input("WARNING: You are about to override an existing file. Proceed? (Y/n) ") == "Y"
 
         if not override:
@@ -12,10 +10,21 @@ def build():
             quit(-1)
         else:
             print("Deleting existing file...")
-            os.remove(f"dist/{name}.exe")
+            os.remove(f"dist/rfgui.exe")
 
-    print(f"Building {name}.exe")
-    os.system(f"pyinstaller --onefile dev/{name}.py")
+    print(f"Building rfgui.exe")
+    os.system(f"pyinstaller --onefile dev/rfgui.py")
+
+    with open("dist/rfgui.exe", 'rb') as f:
+        file = f.read()
+
+    with open("rfgui.exe", 'wb') as f:
+        f.write(file)
+
+    os.remove("dist/rfgui.exe")
+
+    print(f"Built sucessfully! rfgui.exe can be found here: {os.path.abspath('rfgui.exe')}")
+
 
 if __name__ == '__main__':
     build()
